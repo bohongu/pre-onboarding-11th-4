@@ -1,11 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { PiMagnifyingGlass } from "react-icons/pi";
+import { SickProps } from "../types/sick";
 
 const Search = () => {
+  const [keyword, setKeyword] = useState("");
+  const [result, setResult] = useState<SickProps>([]);
+  const onChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value);
+  };
+
+  const onHandleSearch = async (disease: string) => {
+    const URL = `http://localhost:4000/sick?q=${disease}`;
+    const cacheStorage = await caches.open("search");
+    const responseCache = await cacheStorage.match(URL);
+    if (disease !== "") {
+      try {
+        if (responseCache) {
+          const data = await responseCache.json();
+          setResult(data);
+        } else {
+          const response = await fetch(URL);
+          cacheStorage.put(URL, response);
+          const data = await response.clone().json();
+          setResult(data);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  };
+
+  useEffect(() => {
+    onHandleSearch(keyword);
+    console.log(result);
+  }, [keyword, result]);
+
   return (
     <SearchWrapper>
-      <input placeholder="질환명을 입력해 주세요" />
+      <input
+        placeholder="질환명을 입력해 주세요"
+        value={keyword}
+        onChange={onChangeKeyword}
+      />
       <button>
         <PiMagnifyingGlass />
       </button>
