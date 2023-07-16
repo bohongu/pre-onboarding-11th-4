@@ -1,4 +1,3 @@
-import Recommand from "./components/Recommand";
 import Search from "./components/Search";
 import Title from "./components/Title";
 import Layout from "./components/Layout";
@@ -8,7 +7,6 @@ function App() {
     <Layout>
       <Title />
       <Search />
-      <Recommand />
     </Layout>
   );
 }
