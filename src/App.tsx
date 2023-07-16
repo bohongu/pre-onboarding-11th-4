@@ -1,18 +1,15 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Search from "./pages/Search";
-import Result from "./pages/Result";
-import Layout from "./pages/Layout";
+import Recommand from "./components/Recommand";
+import Search from "./components/Search";
+import Title from "./components/Title";
+import Layout from "./components/Layout";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route index element={<Search />} />
-          <Route path="/:id" element={<Result />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Layout>
+      <Title />
+      <Search />
+      <Recommand />
+    </Layout>
   );
 }
 

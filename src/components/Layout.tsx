@@ -1,13 +1,8 @@
-import React from "react";
-import { Outlet } from "react-router";
+import React, { PropsWithChildren } from "react";
 import styled from "styled-components";
 
-const Layout = () => {
-  return (
-    <Wrapper>
-      <Outlet />
-    </Wrapper>
-  );
+const Layout: React.FC<PropsWithChildren> = ({ children }) => {
+  return <Wrapper>{children}</Wrapper>;
 };
 
 export default Layout;
