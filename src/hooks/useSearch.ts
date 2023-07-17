@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { SickListProps } from "../types/sick";
 import { DEBOUNCE_TIME } from "../constants/debounce";
+import sliceData from "../utils/sliceData";
 
 const useSearch = (keyword: string | number) => {
   const [result, setResult] = useState<SickListProps>([]);
@@ -12,11 +13,11 @@ const useSearch = (keyword: string | number) => {
     if (keyword !== "") {
       try {
         if (responseCache) {
-          const data = (await responseCache.json()).slice(0, 7);
+          const data = sliceData(await responseCache.json());
           setResult(data);
         } else {
           const response = await fetch(URL);
-          const data = (await response.clone().json()).slice(0, 7);
+          const data = sliceData(await response.clone().json());
           setResult(data);
           cacheStorage.put(URL, response);
           console.log("calling api");
