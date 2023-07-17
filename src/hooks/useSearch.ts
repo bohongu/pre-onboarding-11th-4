@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { SickListProps } from "../types/sick";
+import { DEBOUNCE_TIME } from "../constants/debounce";
 
 const useSearch = (keyword: string | number) => {
   const [result, setResult] = useState<SickListProps>([]);
@@ -29,7 +30,7 @@ const useSearch = (keyword: string | number) => {
   useEffect(() => {
     const debounce = setTimeout(() => {
       onHandleSearch();
-    }, 500);
+    }, DEBOUNCE_TIME);
 
     return () => {
       clearTimeout(debounce);
