@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
-import { SickProps } from "../types/sick";
+import { SickListProps } from "../types/sick";
 
-const useKeyDown = (keyword: string | number, result: SickProps) => {
+const useKeyDown = (keyword: string | number, result: SickListProps) => {
   const [focusIdx, setFocusIdx] = useState(0);
 
   const onKeyDown = useCallback(

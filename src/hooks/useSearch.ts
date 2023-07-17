@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import { SickProps } from "../types/sick";
+import { SickListProps } from "../types/sick";
 
 const useSearch = (keyword: string | number) => {
-  const [result, setResult] = useState<SickProps>([]);
+  const [result, setResult] = useState<SickListProps>([]);
 
   const onHandleSearch = useCallback(async () => {
     const URL = `http://localhost:4000/sick?q=${keyword}`;

@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { PiMagnifyingGlass } from "react-icons/pi";
 import useInput from "../hooks/useInput";
 import useSearch from "../hooks/useSearch";
 import useKeyDown from "../hooks/useKeyDown";
+import RecommandList from "./RecommandList";
 
 const Search = () => {
   const [keyword, onChangeKeyword] = useInput("");
@@ -54,33 +55,13 @@ const Search = () => {
           <PiMagnifyingGlass />
         </button>
       </SearchWrapper>
-      {openRecommand && (
-        <RecommandWrapper ref={recommandRef}>
-          {keyword && (
-            <Keyword>
-              <PiMagnifyingGlass
-                style={{ marginRight: "0.75rem", color: "#adb5bd" }}
-              />
-              {keyword}
-            </Keyword>
-          )}
-
-          <h2>추천 검색어</h2>
-          <ul>
-            {recommandResults.map((result, idx) => (
-              <Li
-                key={result.sickCd}
-                focusing={focusIdx === idx ? "true" : "false"}
-              >
-                <PiMagnifyingGlass
-                  style={{ marginRight: "0.75rem", color: "#adb5bd" }}
-                />
-                {result.sickNm}
-              </Li>
-            ))}
-          </ul>
-        </RecommandWrapper>
-      )}
+      <RecommandList
+        openRecommand={openRecommand}
+        recommandRef={recommandRef}
+        keyword={keyword}
+        recommandResults={recommandResults}
+        focusIdx={focusIdx}
+      />
     </div>
   );
 };
@@ -113,28 +94,6 @@ const SearchWrapper = styled.div`
     color: #ffffff;
     cursor: pointer;
   }
-`;
-
-const RecommandWrapper = styled.div`
-  background: #ffffff;
-  border-radius: 10px;
-  padding: 1rem 0;
-
-  h2 {
-    font-size: 12px;
-    color: #adb5bd;
-    padding: 0 1rem 0.25rem 1rem;
-  }
-`;
-
-const Keyword = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 0.75rem 1rem;
-`;
-
-const Li = styled(Keyword)<{ focusing: string }>`
-  background: ${(props) => (props.focusing === "true" ? "#f1f3f5" : "none")};
 `;
 
 export default Search;
