@@ -1,22 +1,38 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { PiMagnifyingGlass } from "react-icons/pi";
 import useInput from "../hooks/useInput";
 import useSearch from "../hooks/useSearch";
+import useKeyDown from "../hooks/useKeyDown";
 
 const Search = () => {
   const [keyword, onChangeKeyword] = useInput("");
+  const recommandResults = useSearch(keyword);
+  const [focusIdx, setFocusIdx, onKeyDown] = useKeyDown(
+    keyword,
+    recommandResults
+  );
   const [openRecommand, setOpenRecommand] = useState(false);
-  const RecommandRef = useRef<HTMLDivElement>(null);
-  const RecommandResults = useSearch(keyword);
+  const recommandRef = useRef<HTMLDivElement>(null);
   const onClickInput = (e: React.MouseEvent<HTMLInputElement>) => {
     e.stopPropagation();
     setOpenRecommand(true);
+    setFocusIdx(0);
   };
 
   useEffect(() => {
+    if (!keyword) {
+      setOpenRecommand(false);
+      setFocusIdx(0);
+    } else {
+      setOpenRecommand(true);
+      setFocusIdx(0);
+    }
+  }, [keyword, setFocusIdx]);
+
+  useEffect(() => {
     const onClickOutside = (e: any) => {
-      if (openRecommand && !RecommandRef.current?.contains(e.target))
+      if (openRecommand && !recommandRef.current?.contains(e.target))
         setOpenRecommand(false);
     };
     document.addEventListener("click", onClickOutside);
@@ -32,18 +48,33 @@ const Search = () => {
           value={keyword}
           onChange={onChangeKeyword}
           onClick={onClickInput}
+          onKeyDown={onKeyDown}
         />
         <button>
           <PiMagnifyingGlass />
         </button>
       </SearchWrapper>
       {openRecommand && (
-        <RecommandWrapper ref={RecommandRef}>
+        <RecommandWrapper ref={recommandRef}>
+          {keyword && (
+            <Keyword>
+              <PiMagnifyingGlass
+                style={{ marginRight: "0.75rem", color: "#adb5bd" }}
+              />
+              {keyword}
+            </Keyword>
+          )}
+
           <h2>추천 검색어</h2>
           <ul>
-            {RecommandResults.map((result) => (
-              <Li key={result.sickCd}>
-                <PiMagnifyingGlass style={{ marginRight: "0.75rem" }} />
+            {recommandResults.map((result, idx) => (
+              <Li
+                key={result.sickCd}
+                focusing={focusIdx === idx ? "true" : "false"}
+              >
+                <PiMagnifyingGlass
+                  style={{ marginRight: "0.75rem", color: "#adb5bd" }}
+                />
                 {result.sickNm}
               </Li>
             ))}
@@ -87,19 +118,23 @@ const SearchWrapper = styled.div`
 const RecommandWrapper = styled.div`
   background: #ffffff;
   border-radius: 10px;
-  padding: 1rem;
+  padding: 1rem 0;
 
   h2 {
     font-size: 12px;
     color: #adb5bd;
-    padding-bottom: 0.25rem;
+    padding: 0 1rem 0.25rem 1rem;
   }
 `;
 
-const Li = styled.li`
+const Keyword = styled.div`
   display: flex;
   align-items: center;
-  padding: 0.75rem 0;
+  padding: 0.75rem 1rem;
+`;
+
+const Li = styled(Keyword)<{ focusing: string }>`
+  background: ${(props) => (props.focusing === "true" ? "#f1f3f5" : "none")};
 `;
 
 export default Search;
