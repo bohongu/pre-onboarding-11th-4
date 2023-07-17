@@ -25,4 +25,4 @@ const Li = styled.div<{ focusing: string }>`
   background: ${(props) => (props.focusing === "true" ? "#f1f3f5" : "none")};
 `;
 
-export default RecommandItem;
+export default React.memo(RecommandItem);
