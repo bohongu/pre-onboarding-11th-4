@@ -22,16 +22,6 @@ const Search = () => {
   };
 
   useEffect(() => {
-    if (!keyword) {
-      setOpenRecommand(false);
-      setFocusIdx(-1);
-    } else {
-      setOpenRecommand(true);
-      setFocusIdx(-1);
-    }
-  }, [keyword, setFocusIdx]);
-
-  useEffect(() => {
     const onClickOutside = (e: any) => {
       if (openRecommand && !recommandRef.current?.contains(e.target))
         setOpenRecommand(false);

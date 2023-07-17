@@ -23,24 +23,28 @@ const RecommandList = ({
     <>
       {openRecommand && (
         <RecommandWrapper ref={recommandRef}>
-          {keyword && (
+          {keyword ? (
             <Keyword focusing={focusIdx === -1 ? "true" : "false"}>
               <PiMagnifyingGlass
                 style={{ marginRight: "0.75rem", color: "#adb5bd" }}
               />
               {keyword}
             </Keyword>
+          ) : (
+            <Keyword>검색어 없음</Keyword>
           )}
           <h2>추천 검색어</h2>
           <ul>
-            {recommandResults.map((result, idx) => (
-              <RecommandItem
-                key={result.sickCd}
-                result={result}
-                idx={idx}
-                focusIdx={focusIdx}
-              />
-            ))}
+            {recommandResults &&
+              keyword &&
+              recommandResults.map((result, idx) => (
+                <RecommandItem
+                  key={result.sickCd}
+                  result={result}
+                  idx={idx}
+                  focusIdx={focusIdx}
+                />
+              ))}
           </ul>
         </RecommandWrapper>
       )}
@@ -60,7 +64,7 @@ const RecommandWrapper = styled.div`
   }
 `;
 
-const Keyword = styled.div<{ focusing: string }>`
+const Keyword = styled.div<{ focusing?: string }>`
   display: flex;
   align-items: center;
   padding: 0.75rem 1rem;

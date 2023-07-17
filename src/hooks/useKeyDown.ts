@@ -17,7 +17,7 @@ const useKeyDown = (keyword: string | number, result: SickListProps) => {
       }
 
       if (e.code === "Enter" && keyword && result) {
-        if (focusIdx === -1) {
+        if (focusIdx === -1 && keyword) {
           alert(keyword);
         } else {
           alert(result[focusIdx].sickNm);
