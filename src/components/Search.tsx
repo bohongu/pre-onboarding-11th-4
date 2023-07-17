@@ -18,16 +18,16 @@ const Search = () => {
   const onClickInput = (e: React.MouseEvent<HTMLInputElement>) => {
     e.stopPropagation();
     setOpenRecommand(true);
-    setFocusIdx(0);
+    setFocusIdx(-1);
   };
 
   useEffect(() => {
     if (!keyword) {
       setOpenRecommand(false);
-      setFocusIdx(0);
+      setFocusIdx(-1);
     } else {
       setOpenRecommand(true);
-      setFocusIdx(0);
+      setFocusIdx(-1);
     }
   }, [keyword, setFocusIdx]);
 

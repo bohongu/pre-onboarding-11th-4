@@ -24,7 +24,7 @@ const RecommandList = ({
       {openRecommand && (
         <RecommandWrapper ref={recommandRef}>
           {keyword && (
-            <Keyword>
+            <Keyword focusing={focusIdx === -1 ? "true" : "false"}>
               <PiMagnifyingGlass
                 style={{ marginRight: "0.75rem", color: "#adb5bd" }}
               />
@@ -60,10 +60,12 @@ const RecommandWrapper = styled.div`
   }
 `;
 
-const Keyword = styled.div`
+const Keyword = styled.div<{ focusing: string }>`
   display: flex;
   align-items: center;
   padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  background: ${(props) => (props.focusing === "true" ? "#f1f3f5" : "none")};
 `;
 
 export default RecommandList;

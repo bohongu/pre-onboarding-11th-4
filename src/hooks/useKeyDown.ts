@@ -7,7 +7,7 @@ const useKeyDown = (keyword: string | number, result: SickListProps) => {
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.nativeEvent.isComposing) return;
-      if (e.code === "ArrowUp" && keyword && focusIdx > 0) {
+      if (e.code === "ArrowUp" && keyword && focusIdx > -1) {
         setFocusIdx((prev) => prev - 1);
         return;
       }
@@ -15,8 +15,16 @@ const useKeyDown = (keyword: string | number, result: SickListProps) => {
         setFocusIdx((prev) => prev + 1);
         return;
       }
+
+      if (e.code === "Enter" && keyword && result) {
+        if (focusIdx === -1) {
+          alert(keyword);
+        } else {
+          alert(result[focusIdx].sickNm);
+        }
+      }
     },
-    [focusIdx, keyword, result.length]
+    [focusIdx, keyword, result]
   );
 
   return [focusIdx, setFocusIdx, onKeyDown] as const;
