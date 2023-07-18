@@ -69,7 +69,7 @@ const Keyword = styled.div<{ focusing?: string }>`
   align-items: center;
   padding: 0.75rem 1rem;
   margin-bottom: 0.75rem;
-  background: ${(props) => (props.focusing === "true" ? "#f1f3f5" : "none")};
+  background: ${({ focusing }) => (focusing === "true" ? "#f1f3f5" : "none")};
 `;
 
 export default RecommandList;

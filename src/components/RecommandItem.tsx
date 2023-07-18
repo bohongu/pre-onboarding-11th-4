@@ -22,7 +22,7 @@ const Li = styled.div<{ focusing: string }>`
   display: flex;
   align-items: center;
   padding: 0.75rem 1rem;
-  background: ${(props) => (props.focusing === "true" ? "#f1f3f5" : "none")};
+  background: ${({ focusing }) => (focusing === "true" ? "#f1f3f5" : "none")};
 `;
 
 export default React.memo(RecommandItem);
