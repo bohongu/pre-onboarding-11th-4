@@ -25,7 +25,7 @@ const useSearch = (keyword: string | number) => {
           setResult(data);
         } else {
           fetchData();
-          console.log("calling API");
+          console.log("calling api");
         }
       } catch (e) {
         console.error(e);
