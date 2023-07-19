@@ -53,7 +53,7 @@ const useSearch = (keyword: string | number) => {
           });
 
           cacheStorage.put(URL, modifiedResponse);
-          console.log("calling API");
+          console.info("calling api");
         }
       } catch (e) {
         console.error(e);
